@@ -186,8 +186,23 @@ class BookViewController: UIViewController {
             if let responseStr = response.result.value {
                 let jsonResponse = JSON(responseStr)
                 let msg = jsonResponse["msg"].stringValue
+                print(msg)
                 if msg == "取消成功" {
                     let alertController = UIAlertController(title: "取消成功", message: "", preferredStyle: .alert)
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                        self.presentedViewController?.dismiss(animated: true, completion: nil)
+                        self.isSuccess = false
+                        self.bookedLibraryID = ""
+                        self.bookedLibrary = ""
+                        self.bookButton.isEnabled = true
+                        self.bookButton.setTitle("开始预约", for: .normal)
+                        self.bookButton.backgroundColor = .systemBlue
+                        self.tableView.isUserInteractionEnabled = true
+                    }
+                } else if msg == "退出失败，请重试" {
+                    let alertController = UIAlertController(title: "已在网页端取消预约", message: "", preferredStyle: .alert)
                     self.present(alertController, animated: true, completion: nil)
                     
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
