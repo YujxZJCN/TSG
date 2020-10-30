@@ -185,9 +185,12 @@ class BookViewController: UIViewController {
             bookButton.isEnabled = false
             bookButton.setTitle("正在预约中", for: .normal)
             tableView.isUserInteractionEnabled = false
+            daySelectControl.isEnabled = false
             bookButton.backgroundColor = .gray
         }
     }
+    
+    var tryTimes = 0
     
     @objc func booking() {
         let date = daySelectControl.selectedSegmentIndex
@@ -200,7 +203,8 @@ class BookViewController: UIViewController {
             } else {
                 libraryID = String(libraryTomorrowID[library[libraryIndex]]! + Date.daysBetween(start: defaultDate, end: Date()))
             }
-            
+            tryTimes += 1
+            bookButton.setTitle("正在预约中（\(tryTimes)）", for: .normal)
             self.book(id: libraryID, libraryName: library[libraryIndex])
         }
     }
@@ -339,11 +343,13 @@ class BookViewController: UIViewController {
                     self.isSuccess = true
                     self.bookedLibrary = libraryName
                     self.bookedLibraryID = id
+                    self.tryTimes = 0
                     
                     self.bookButton.isEnabled = true
                     self.bookButton.backgroundColor = .gray
                     self.bookButton.setTitle("已预约：\(libraryName)", for: .normal)
                     self.tableView.isUserInteractionEnabled = false
+                    self.daySelectControl.isEnabled = true
                     
                     let alertController = UIAlertController(title: "\(libraryName)申请成功", message: "", preferredStyle: .alert)
                     self.present(alertController, animated: true, completion: nil)
