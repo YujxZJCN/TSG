@@ -21,6 +21,14 @@ class BookViewController: UIViewController {
     
     @IBOutlet var daySelectControl: UISegmentedControl!
     
+    @IBAction func dayChange(_ sender: UISegmentedControl) {
+        print(daySelectControl.selectedSegmentIndex)
+        if daySelectControl.selectedSegmentIndex == 0 {
+            isTomorrow = false
+        } else {
+            isTomorrow = true
+        }
+    }
     var mobile = ""
     
     var defaultDate: Date {
@@ -77,20 +85,82 @@ class BookViewController: UIViewController {
     
     var isSuccess = false {
         didSet {
-            UserDefaults.standard.set(isSuccess, forKey: "isSuccess")
+            if isTomorrow {
+                UserDefaults.standard.set(isSuccess, forKey: "\(globalStudentID)tomorrow_isSuccess")
+            } else {
+                UserDefaults.standard.set(isSuccess, forKey: "\(globalStudentID)today_isSuccess")
+            }
         }
     }
     
-    var isTomorrow = false
+    var isTomorrow = false {
+        didSet {
+            if isTomorrow {
+                if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)tomorrow_bookedLibrary") {
+                    self.bookedLibrary = bookedLibrary
+                }
+                
+                if let bookedLibraryID = UserDefaults.standard.string(forKey: "\(globalStudentID)tomorrow_bookedLibraryID") {
+                    self.bookedLibraryID = bookedLibraryID
+                }
+                
+                isSuccess = UserDefaults.standard.bool(forKey: "\(globalStudentID)tomorrow_isSuccess")
+                
+                if isSuccess {
+                    bookButton.isEnabled = true
+                    bookButton.backgroundColor = .gray
+                    bookButton.setTitle("已预约：\(bookedLibrary)", for: .normal)
+                    tableView.isUserInteractionEnabled = false
+
+                } else {
+                    bookButton.isEnabled = false
+                    bookButton.backgroundColor = .gray
+                    tableView.isUserInteractionEnabled = true
+                    bookButton.setTitle("开始预约", for: .normal)
+                }
+            } else {
+                if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibrary") {
+                    self.bookedLibrary = bookedLibrary
+                }
+                
+                if let bookedLibraryID = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibraryID") {
+                    self.bookedLibraryID = bookedLibraryID
+                }
+                
+                isSuccess = UserDefaults.standard.bool(forKey: "\(globalStudentID)today_isSuccess")
+                
+                if isSuccess {
+                    bookButton.isEnabled = true
+                    bookButton.backgroundColor = .gray
+                    bookButton.setTitle("已预约：\(bookedLibrary)", for: .normal)
+                    tableView.isUserInteractionEnabled = false
+
+                } else {
+                    bookButton.isEnabled = false
+                    bookButton.backgroundColor = .gray
+                    tableView.isUserInteractionEnabled = true
+                    bookButton.setTitle("开始预约", for: .normal)
+                }
+            }
+        }
+    }
     
     var bookedLibrary = "" {
         didSet {
-            UserDefaults.standard.set(bookedLibrary, forKey: "bookedLibrary")
+            if isTomorrow {
+                UserDefaults.standard.set(bookedLibrary, forKey: "\(globalStudentID)tomorrow_bookedLibrary")
+            } else {
+                UserDefaults.standard.set(bookedLibrary, forKey: "\(globalStudentID)today_bookedLibrary")
+            }
         }
     }
     var bookedLibraryID = "" {
         didSet {
-            UserDefaults.standard.set(bookedLibraryID, forKey: "bookedLibraryID")
+            if isTomorrow {
+                UserDefaults.standard.set(bookedLibraryID, forKey: "\(globalStudentID)tomorrow_bookedLibraryID")
+            } else {
+                UserDefaults.standard.set(bookedLibraryID, forKey: "\(globalStudentID)today_bookedLibraryID")
+            }
         }
     }
     
@@ -146,22 +216,21 @@ class BookViewController: UIViewController {
         
         UIApplication.shared.isIdleTimerDisabled = true
         
-        if let bookedLibrary = UserDefaults.standard.string(forKey: "bookedLibrary") {
+        if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibrary") {
             self.bookedLibrary = bookedLibrary
         }
         
-        if let bookedLibraryID = UserDefaults.standard.string(forKey: "bookedLibraryID") {
+        if let bookedLibraryID = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibraryID") {
             self.bookedLibraryID = bookedLibraryID
         }
         
-        isSuccess = UserDefaults.standard.bool(forKey: "isSuccess")
+        isSuccess = UserDefaults.standard.bool(forKey: "\(globalStudentID)today_isSuccess")
         
         if isSuccess {
             bookButton.isEnabled = true
             bookButton.backgroundColor = .gray
             bookButton.setTitle("已预约：\(bookedLibrary)", for: .normal)
             tableView.isUserInteractionEnabled = false
-
         } else {
             bookButton.isEnabled = false
             bookButton.backgroundColor = .gray

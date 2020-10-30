@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TSG" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="图书馆预约" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -86,7 +86,7 @@
         <!--Book View Controller-->
         <scene sceneID="oAl-dt-xih">
             <objects>
-                <viewController storyboardIdentifier="BookVC" id="Qt7-UK-DqZ" customClass="BookViewController" customModule="TSG" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BookVC" id="Qt7-UK-DqZ" customClass="BookViewController" customModule="图书馆预约" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mMi-6e-SJO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,6 +100,9 @@
                                             <segment title="今日"/>
                                             <segment title="明日"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="dayChange:" destination="Qt7-UK-DqZ" eventType="valueChanged" id="SZh-Ra-lBF"/>
+                                        </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvV-AL-XHd">
                                         <rect key="frame" x="160" y="14" width="239" height="42"/>
@@ -128,9 +131,8 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hxV-W2-ZBc">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="792"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="libraryCell" rowHeight="90" id="nYC-oG-9r0" customClass="LibraryTableViewCell" customModule="TSG" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="libraryCell" rowHeight="90" id="nYC-oG-9r0" customClass="LibraryTableViewCell" customModule="图书馆预约" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nYC-oG-9r0" id="IVi-o3-0ec">

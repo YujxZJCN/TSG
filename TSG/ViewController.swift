@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+var globalStudentID = ""
+
 class ViewController: UIViewController {
     
     var cookies: [HTTPCookie] = []
@@ -32,8 +34,9 @@ class ViewController: UIViewController {
         
         studentIDTextField.resignFirstResponder()
         verifyTextField.resignFirstResponder()
-                
+        
         let studentID = studentIDTextField.text!
+        globalStudentID = studentID
         let verifyCode = verifyTextField.text!
         
         UserDefaults.standard.set(studentID, forKey: "studentID")
@@ -54,7 +57,7 @@ class ViewController: UIViewController {
             "Referer" : "http://10.203.97.155/home/book/index/type/4",
             "Content-Type" : "application/x-www-form-urlencoded; charset=UTF-8"
         ]
-
+        
         Alamofire.request("http://10.203.97.155/api.php/login", method: .post, parameters: parameters, headers: headers).responseJSON { (response) in
             if let responseStr = response.result.value {
                 let jsonResponse = JSON(responseStr)
@@ -63,38 +66,49 @@ class ViewController: UIViewController {
                 self.mobile = mobile
                 print(jsonResponse)
                 
-                self.statusLabel.text = "登录成功"
-                let cookieProps = [
-                     HTTPCookiePropertyKey.domain: "10.203.97.155",
-                     HTTPCookiePropertyKey.path: "/",
-                     HTTPCookiePropertyKey.name: "user_name",
-                     HTTPCookiePropertyKey.value: userName
-                ]
-                if let cookie = HTTPCookie(properties: cookieProps) {
-                    self.cookies.append(cookie)
-                }
+                let msg = jsonResponse["msg"].stringValue
                 
-                for name in jsonResponse["data"]["_hash_"].dictionary!.keys {
+                if msg == "验证码错误，请重新输入" {
+                    let alertController = UIAlertController(title: "验证码错误", message: "", preferredStyle: .alert)
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                        self.presentedViewController?.dismiss(animated: true, completion: nil)
+                    }
+                } else {
+                    self.statusLabel.text = "登录成功"
                     let cookieProps = [
-                         HTTPCookiePropertyKey.domain: "10.203.97.155",
-                         HTTPCookiePropertyKey.path: "/",
-                         HTTPCookiePropertyKey.name: name,
-                         HTTPCookiePropertyKey.value: jsonResponse["data"]["_hash_"][name].stringValue
+                        HTTPCookiePropertyKey.domain: "10.203.97.155",
+                        HTTPCookiePropertyKey.path: "/",
+                        HTTPCookiePropertyKey.name: "user_name",
+                        HTTPCookiePropertyKey.value: userName
                     ]
                     if let cookie = HTTPCookie(properties: cookieProps) {
                         self.cookies.append(cookie)
                     }
-                }
-                
-                self.setCookies(cookies: self.cookies)
-                
-//                self.book(id: "3813")
-                
-                DispatchQueue.main.async {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "BookVC") as! BookViewController
-                    vc.mobile = self.mobile
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
+                    
+                    for name in jsonResponse["data"]["_hash_"].dictionary!.keys {
+                        let cookieProps = [
+                            HTTPCookiePropertyKey.domain: "10.203.97.155",
+                            HTTPCookiePropertyKey.path: "/",
+                            HTTPCookiePropertyKey.name: name,
+                            HTTPCookiePropertyKey.value: jsonResponse["data"]["_hash_"][name].stringValue
+                        ]
+                        if let cookie = HTTPCookie(properties: cookieProps) {
+                            self.cookies.append(cookie)
+                        }
+                    }
+                    
+                    self.setCookies(cookies: self.cookies)
+                    
+                    //                self.book(id: "3813")
+                    
+                    DispatchQueue.main.async {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "BookVC") as! BookViewController
+                        vc.mobile = self.mobile
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
+                    }
                 }
                 
             } else {
@@ -116,18 +130,18 @@ class ViewController: UIViewController {
         let studentID = UserDefaults.standard.string(forKey: "studentID")
         studentIDTextField.text = studentID
     }
-
+    
     func fetchTheCookies() {
         let parameters: [String: AnyObject] = [:]
         statusLabel.text = "正在获取Cookies"
         Alamofire.request("http://10.203.97.155/home/book/index/type/4", method: .get, parameters: parameters).responseJSON { response in
             if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
             {
-                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
                 self.cookies += cookies
                 self.setCookies(cookies: self.cookies)
                 self.statusLabel.text = "Cookies获取成功"
-
+                
                 let headers: [String : String] = [
                     "Accept" : "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
                     "Accept-Encoding" : "gzip, deflate",
