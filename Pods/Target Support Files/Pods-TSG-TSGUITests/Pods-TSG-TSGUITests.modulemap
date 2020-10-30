@@ -1,0 +1,6 @@
+framework module Pods_TSG_TSGUITests {
+  umbrella header "Pods-TSG-TSGUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

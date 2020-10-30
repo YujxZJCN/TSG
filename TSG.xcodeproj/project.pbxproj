@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22ABF16A6D92FA2862960AE3 /* Pods_TSGTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F0DC1A0567C1F64754FB7E3 /* Pods_TSGTests.framework */; };
+		851D8EC2CB2C8FD7B2AF86FD /* Pods_TSG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EABD6299536D31F12DC03AFA /* Pods_TSG.framework */; };
+		BEDDF334624C3A5E39DE5035 /* Pods_TSG_TSGUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D9C9960485D404B13CAD7A /* Pods_TSG_TSGUITests.framework */; };
 		F61ADD80254AD9120038982C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADD7F254AD9120038982C /* AppDelegate.swift */; };
 		F61ADD82254AD9120038982C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADD81254AD9120038982C /* SceneDelegate.swift */; };
 		F61ADD84254AD9120038982C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADD83254AD9120038982C /* ViewController.swift */; };
@@ -16,6 +19,8 @@
 		F61ADD8F254AD9150038982C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F61ADD8D254AD9150038982C /* LaunchScreen.storyboard */; };
 		F61ADD9A254AD9150038982C /* TSGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADD99254AD9150038982C /* TSGTests.swift */; };
 		F61ADDA5254AD9150038982C /* TSGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDA4254AD9150038982C /* TSGUITests.swift */; };
+		F61ADDB3254AFC720038982C /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDB2254AFC720038982C /* BookViewController.swift */; };
+		F61ADDB5254B01EB0038982C /* LibraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +41,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F61ADD7C254AD9120038982C /* TSG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSG.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A7ED4B000D31882EFEA5139 /* Pods-TSG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSG.release.xcconfig"; path = "Target Support Files/Pods-TSG/Pods-TSG.release.xcconfig"; sourceTree = "<group>"; };
+		7C7C2C3619B0F5305528C6D8 /* Pods-TSGTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSGTests.debug.xcconfig"; path = "Target Support Files/Pods-TSGTests/Pods-TSGTests.debug.xcconfig"; sourceTree = "<group>"; };
+		93B0B36619EE2D9779A1BDCF /* Pods-TSG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSG.debug.xcconfig"; path = "Target Support Files/Pods-TSG/Pods-TSG.debug.xcconfig"; sourceTree = "<group>"; };
+		9F0DC1A0567C1F64754FB7E3 /* Pods_TSGTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSGTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3D9C9960485D404B13CAD7A /* Pods_TSG_TSGUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSG_TSGUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C435CBD3F592E057562C23AC /* Pods-TSG-TSGUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSG-TSGUITests.release.xcconfig"; path = "Target Support Files/Pods-TSG-TSGUITests/Pods-TSG-TSGUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C48EA038044C55E13FB5DEC0 /* Pods-TSG-TSGUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSG-TSGUITests.debug.xcconfig"; path = "Target Support Files/Pods-TSG-TSGUITests/Pods-TSG-TSGUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE3080284C68B667718C64BC /* Pods-TSGTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSGTests.release.xcconfig"; path = "Target Support Files/Pods-TSGTests/Pods-TSGTests.release.xcconfig"; sourceTree = "<group>"; };
+		EABD6299536D31F12DC03AFA /* Pods_TSG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61ADD7C254AD9120038982C /* 图书馆预约.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "图书馆预约.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61ADD7F254AD9120038982C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F61ADD81254AD9120038982C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F61ADD83254AD9120038982C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +65,8 @@
 		F61ADDA0254AD9150038982C /* TSGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TSGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F61ADDA4254AD9150038982C /* TSGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSGUITests.swift; sourceTree = "<group>"; };
 		F61ADDA6254AD9150038982C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F61ADDB2254AFC720038982C /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				851D8EC2CB2C8FD7B2AF86FD /* Pods_TSG.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22ABF16A6D92FA2862960AE3 /* Pods_TSGTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +90,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDDF334624C3A5E39DE5035 /* Pods_TSG_TSGUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63ACE877E3C53862B37B7DDC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				93B0B36619EE2D9779A1BDCF /* Pods-TSG.debug.xcconfig */,
+				7A7ED4B000D31882EFEA5139 /* Pods-TSG.release.xcconfig */,
+				C48EA038044C55E13FB5DEC0 /* Pods-TSG-TSGUITests.debug.xcconfig */,
+				C435CBD3F592E057562C23AC /* Pods-TSG-TSGUITests.release.xcconfig */,
+				7C7C2C3619B0F5305528C6D8 /* Pods-TSGTests.debug.xcconfig */,
+				DE3080284C68B667718C64BC /* Pods-TSGTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E2AEE4E3F343D62C6FFE7D65 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EABD6299536D31F12DC03AFA /* Pods_TSG.framework */,
+				C3D9C9960485D404B13CAD7A /* Pods_TSG_TSGUITests.framework */,
+				9F0DC1A0567C1F64754FB7E3 /* Pods_TSGTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F61ADD73254AD9120038982C = {
 			isa = PBXGroup;
 			children = (
@@ -85,13 +127,15 @@
 				F61ADD98254AD9150038982C /* TSGTests */,
 				F61ADDA3254AD9150038982C /* TSGUITests */,
 				F61ADD7D254AD9120038982C /* Products */,
+				63ACE877E3C53862B37B7DDC /* Pods */,
+				E2AEE4E3F343D62C6FFE7D65 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		F61ADD7D254AD9120038982C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F61ADD7C254AD9120038982C /* TSG.app */,
+				F61ADD7C254AD9120038982C /* 图书馆预约.app */,
 				F61ADD95254AD9150038982C /* TSGTests.xctest */,
 				F61ADDA0254AD9150038982C /* TSGUITests.xctest */,
 			);
@@ -104,6 +148,8 @@
 				F61ADD7F254AD9120038982C /* AppDelegate.swift */,
 				F61ADD81254AD9120038982C /* SceneDelegate.swift */,
 				F61ADD83254AD9120038982C /* ViewController.swift */,
+				F61ADDB2254AFC720038982C /* BookViewController.swift */,
+				F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */,
 				F61ADD85254AD9120038982C /* Main.storyboard */,
 				F61ADD8B254AD9150038982C /* Assets.xcassets */,
 				F61ADD8D254AD9150038982C /* LaunchScreen.storyboard */,
@@ -138,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F61ADDA9254AD9150038982C /* Build configuration list for PBXNativeTarget "TSG" */;
 			buildPhases = (
+				F3164162FF5FA7221086956F /* [CP] Check Pods Manifest.lock */,
 				F61ADD78254AD9120038982C /* Sources */,
 				F61ADD79254AD9120038982C /* Frameworks */,
 				F61ADD7A254AD9120038982C /* Resources */,
+				AA2CB7C6D8FA57BC7B44171B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -148,13 +196,14 @@
 			);
 			name = TSG;
 			productName = TSG;
-			productReference = F61ADD7C254AD9120038982C /* TSG.app */;
+			productReference = F61ADD7C254AD9120038982C /* 图书馆预约.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F61ADD94254AD9150038982C /* TSGTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F61ADDAC254AD9150038982C /* Build configuration list for PBXNativeTarget "TSGTests" */;
 			buildPhases = (
+				D226D4C4A5CB54D2C6459F7C /* [CP] Check Pods Manifest.lock */,
 				F61ADD91254AD9150038982C /* Sources */,
 				F61ADD92254AD9150038982C /* Frameworks */,
 				F61ADD93254AD9150038982C /* Resources */,
@@ -173,9 +222,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F61ADDAF254AD9150038982C /* Build configuration list for PBXNativeTarget "TSGUITests" */;
 			buildPhases = (
+				5A2F3A4C13179A10F324BDF9 /* [CP] Check Pods Manifest.lock */,
 				F61ADD9C254AD9150038982C /* Sources */,
 				F61ADD9D254AD9150038982C /* Frameworks */,
 				F61ADD9E254AD9150038982C /* Resources */,
+				83331DEAD3F5F16B2C21E689 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,6 +308,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5A2F3A4C13179A10F324BDF9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TSG-TSGUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83331DEAD3F5F16B2C21E689 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TSG-TSGUITests/Pods-TSG-TSGUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TSG-TSGUITests/Pods-TSG-TSGUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TSG-TSGUITests/Pods-TSG-TSGUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AA2CB7C6D8FA57BC7B44171B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TSG/Pods-TSG-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TSG/Pods-TSG-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TSG/Pods-TSG-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D226D4C4A5CB54D2C6459F7C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TSGTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3164162FF5FA7221086956F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TSG-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F61ADD78254AD9120038982C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -264,8 +418,10 @@
 			files = (
 				F61ADD84254AD9120038982C /* ViewController.swift in Sources */,
 				F61ADD80254AD9120038982C /* AppDelegate.swift in Sources */,
+				F61ADDB3254AFC720038982C /* BookViewController.swift in Sources */,
 				F61ADD8A254AD9120038982C /* TSG.xcdatamodeld in Sources */,
 				F61ADD82254AD9120038982C /* SceneDelegate.swift in Sources */,
+				F61ADDB5254B01EB0038982C /* LibraryTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +592,7 @@
 		};
 		F61ADDAA254AD9150038982C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93B0B36619EE2D9779A1BDCF /* Pods-TSG.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -446,7 +603,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yjx.TSG;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "图书馆预约";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -454,6 +611,7 @@
 		};
 		F61ADDAB254AD9150038982C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A7ED4B000D31882EFEA5139 /* Pods-TSG.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -464,7 +622,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yjx.TSG;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "图书馆预约";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -472,6 +630,7 @@
 		};
 		F61ADDAD254AD9150038982C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C7C2C3619B0F5305528C6D8 /* Pods-TSGTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -494,6 +653,7 @@
 		};
 		F61ADDAE254AD9150038982C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE3080284C68B667718C64BC /* Pods-TSGTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -516,6 +676,7 @@
 		};
 		F61ADDB0254AD9150038982C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C48EA038044C55E13FB5DEC0 /* Pods-TSG-TSGUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -536,6 +697,7 @@
 		};
 		F61ADDB1254AD9150038982C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C435CBD3F592E057562C23AC /* Pods-TSG-TSGUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
