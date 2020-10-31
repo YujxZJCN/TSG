@@ -8,6 +8,8 @@ target 'TSG' do
   # Pods for TSG
   pod 'Alamofire', '~> 4.7'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'Kanna', '~> 4.0.0'
+  pod 'NVActivityIndicatorView'
 
   target 'TSGTests' do
     inherit! :search_paths

@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Kanna
+import NVActivityIndicatorView
 
 class BookViewController: UIViewController {
     
@@ -18,6 +20,9 @@ class BookViewController: UIViewController {
             bookButton.layer.masksToBounds = true
         }
     }
+    
+    @IBOutlet var menuView: UIView!
+    
     
     @IBOutlet var daySelectControl: UISegmentedControl!
     
@@ -30,6 +35,8 @@ class BookViewController: UIViewController {
         }
     }
     var mobile = ""
+    
+    lazy var activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.menuView.frame.size.width / 2 - 20, y: self.menuView.frame.size.height / 2 - 20, width: 40, height: 40), type: .ballSpinFadeLoader, color: .black, padding: .none)
     
     var defaultDate: Date {
         let formatter = DateFormatter()
@@ -111,12 +118,18 @@ class BookViewController: UIViewController {
                     bookButton.backgroundColor = .gray
                     bookButton.setTitle("已预约：\(bookedLibrary)", for: .normal)
                     tableView.isUserInteractionEnabled = false
-
                 } else {
-                    bookButton.isEnabled = false
-                    bookButton.backgroundColor = .gray
-                    tableView.isUserInteractionEnabled = true
-                    bookButton.setTitle("开始预约", for: .normal)
+                    if indexPaths.isEmpty {
+                        bookButton.isEnabled = false
+                        bookButton.backgroundColor = .gray
+                        tableView.isUserInteractionEnabled = true
+                        bookButton.setTitle("开始预约", for: .normal)
+                    } else {
+                        bookButton.isEnabled = true
+                        bookButton.backgroundColor = .systemBlue
+                        tableView.isUserInteractionEnabled = true
+                        bookButton.setTitle("开始预约", for: .normal)
+                    }
                 }
             } else {
                 if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibrary") {
@@ -136,10 +149,17 @@ class BookViewController: UIViewController {
                     tableView.isUserInteractionEnabled = false
 
                 } else {
-                    bookButton.isEnabled = false
-                    bookButton.backgroundColor = .gray
-                    tableView.isUserInteractionEnabled = true
-                    bookButton.setTitle("开始预约", for: .normal)
+                    if indexPaths.isEmpty {
+                        bookButton.isEnabled = false
+                        bookButton.backgroundColor = .gray
+                        tableView.isUserInteractionEnabled = true
+                        bookButton.setTitle("开始预约", for: .normal)
+                    } else {
+                        bookButton.isEnabled = true
+                        bookButton.backgroundColor = .systemBlue
+                        tableView.isUserInteractionEnabled = true
+                        bookButton.setTitle("开始预约", for: .normal)
+                    }
                 }
             }
         }
@@ -180,13 +200,26 @@ class BookViewController: UIViewController {
             
             self.present(alertController, animated: true, completion: nil)
         } else {
-            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(booking), userInfo: nil, repeats: true)
-            timer.fire()
-            bookButton.isEnabled = false
-            bookButton.setTitle("正在预约中", for: .normal)
-            tableView.isUserInteractionEnabled = false
-            daySelectControl.isEnabled = false
-            bookButton.backgroundColor = .gray
+            let buttonTitle = bookButton.title(for: .normal)!
+            if buttonTitle.contains("正在预约中") {
+                self.timer.invalidate()
+                self.bookButton.isEnabled = true
+                self.daySelectControl.isEnabled = true
+                self.bookButton.setTitle("开始预约", for: .normal)
+                self.bookButton.backgroundColor = .systemBlue
+                self.tableView.isUserInteractionEnabled = true
+                self.tryTimes = 0
+            } else {
+                if !indexPaths.isEmpty {
+                    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(booking), userInfo: nil, repeats: true)
+                    timer.fire()
+                    bookButton.isEnabled = true
+                    bookButton.setTitle("正在预约中", for: .normal)
+                    tableView.isUserInteractionEnabled = false
+                    daySelectControl.isEnabled = false
+                    bookButton.backgroundColor = .gray
+                }
+            }
         }
     }
     
@@ -220,26 +253,76 @@ class BookViewController: UIViewController {
         
         UIApplication.shared.isIdleTimerDisabled = true
         
-        if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibrary") {
-            self.bookedLibrary = bookedLibrary
+        self.bookButton.isEnabled = false
+        self.bookButton.alpha = 0.0
+        self.daySelectControl.alpha = 0.0
+        self.menuView.addSubview(activityIndicatorView)
+        activityIndicatorView.startAnimating()
+        
+        checkBookedLibrary()
+    }
+    
+    func checkBookedLibrary() {
+        Alamofire.request("http://10.203.97.155/user/index/activity2", method: .get).responseData { (response) in
+//            let enc: String.Encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(0x0632))
+            if let html = response.result.value, let doc = try? HTML(html: html, encoding: .utf8) {
+                UserDefaults.standard.set(false, forKey: "\(globalStudentID)today_isSuccess")
+                UserDefaults.standard.set("", forKey: "\(globalStudentID)today_bookedLibrary")
+                UserDefaults.standard.set("", forKey: "\(globalStudentID)today_bookedLibraryID")
+                
+                UserDefaults.standard.set(false, forKey: "\(globalStudentID)tomorrow_isSuccess")
+                UserDefaults.standard.set("", forKey: "\(globalStudentID)tomorrow_bookedLibrary")
+                UserDefaults.standard.set("", forKey: "\(globalStudentID)tomorrow_bookedLibraryID")
+                
+                for content in doc.css("td") {
+                    if let innerHtml = content.innerHTML, innerHtml.contains("menuCheckOut") {
+                        print(innerHtml.components(separatedBy: "menuCheckOut('")[1].components(separatedBy: "')")[0])
+                        let fetchedID = innerHtml.components(separatedBy: "menuCheckOut('")[1].components(separatedBy: "')")[0]
+                        for lib in self.library {
+                            let libID = self.libraryTodayID[lib]! + Date.daysBetween(start: self.defaultDate, end: Date())
+                            if String(libID) == fetchedID {
+                                UserDefaults.standard.set(true, forKey: "\(globalStudentID)today_isSuccess")
+                                UserDefaults.standard.set(lib, forKey: "\(globalStudentID)today_bookedLibrary")
+                                UserDefaults.standard.set(libID, forKey: "\(globalStudentID)today_bookedLibraryID")
+                            }
+                        }
+                        
+                        for lib in self.library {
+                            let libID = self.libraryTomorrowID[lib]! + Date.daysBetween(start: self.defaultDate, end: Date())
+                            if String(libID) == fetchedID {
+                                UserDefaults.standard.set(true, forKey: "\(globalStudentID)tomorrow_isSuccess")
+                                UserDefaults.standard.set(lib, forKey: "\(globalStudentID)tomorrow_bookedLibrary")
+                                UserDefaults.standard.set(libID, forKey: "\(globalStudentID)tomorrow_bookedLibraryID")
+                            }
+                        }
+                    }
+                }
+                
+                if let bookedLibrary = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibrary") {
+                    self.bookedLibrary = bookedLibrary
+                }
+                
+                if let bookedLibraryID = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibraryID") {
+                    self.bookedLibraryID = bookedLibraryID
+                }
+                
+                self.isSuccess = UserDefaults.standard.bool(forKey: "\(globalStudentID)today_isSuccess")
+                
+                if self.isSuccess {
+                    self.bookButton.isEnabled = true
+                    self.bookButton.backgroundColor = .gray
+                    self.bookButton.setTitle("已预约：\(self.bookedLibrary)", for: .normal)
+                    self.tableView.isUserInteractionEnabled = false
+                } else {
+                    self.bookButton.isEnabled = false
+                    self.bookButton.backgroundColor = .gray
+                }
+                self.activityIndicatorView.stopAnimating()
+                self.activityIndicatorView.removeFromSuperview()
+                self.bookButton.alpha = 1.0
+                self.daySelectControl.alpha = 1.0
+            }
         }
-        
-        if let bookedLibraryID = UserDefaults.standard.string(forKey: "\(globalStudentID)today_bookedLibraryID") {
-            self.bookedLibraryID = bookedLibraryID
-        }
-        
-        isSuccess = UserDefaults.standard.bool(forKey: "\(globalStudentID)today_isSuccess")
-        
-        if isSuccess {
-            bookButton.isEnabled = true
-            bookButton.backgroundColor = .gray
-            bookButton.setTitle("已预约：\(bookedLibrary)", for: .normal)
-            tableView.isUserInteractionEnabled = false
-        } else {
-            bookButton.isEnabled = false
-            bookButton.backgroundColor = .gray
-        }
-        
     }
     
     func cancelBooking(id: String) {
@@ -314,6 +397,7 @@ class BookViewController: UIViewController {
                 let msg = jsonResponse["msg"].stringValue
                 if msg == "活动申请失败，已申请的活动时间冲突！" && !self.isSuccess {
                     self.timer.invalidate()
+                    self.tryTimes = 0
                     
                     let alertController = UIAlertController(title: "当日存在已预约的图书馆", message: "", preferredStyle: .alert)
                     self.present(alertController, animated: true, completion: nil)
@@ -327,6 +411,7 @@ class BookViewController: UIViewController {
                     }
                 } else if msg == "活动申请时间 已截止" && !self.isSuccess {
                     self.timer.invalidate()
+                    self.tryTimes = 0
                     
                     let alertController = UIAlertController(title: "当日图书馆申请时间已截止", message: "", preferredStyle: .alert)
                     self.present(alertController, animated: true, completion: nil)

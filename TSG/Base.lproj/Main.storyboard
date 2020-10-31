@@ -173,6 +173,7 @@
                     <connections>
                         <outlet property="bookButton" destination="JvV-AL-XHd" id="ejv-Rk-oZC"/>
                         <outlet property="daySelectControl" destination="RdH-ib-BCN" id="5JO-6Q-2ly"/>
+                        <outlet property="menuView" destination="7vP-cz-ecY" id="l7G-vi-gqA"/>
                         <outlet property="tableView" destination="hxV-W2-ZBc" id="X1D-q0-H6V"/>
                     </connections>
                 </viewController>
