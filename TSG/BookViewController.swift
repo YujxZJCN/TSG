@@ -36,7 +36,13 @@ class BookViewController: UIViewController {
     }
     var mobile = ""
     
-    lazy var activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.menuView.frame.size.width / 2 - 20, y: self.menuView.frame.size.height / 2 - 20, width: 40, height: 40), type: .ballSpinFadeLoader, color: .black, padding: .none)
+    lazy var activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.menuView.frame.size.width / 2 - 20, y: self.menuView.frame.size.height / 2 - 20, width: 40, height: 40), type: .ballSpinFadeLoader, color: UIColor(dynamicProvider: { (trait) -> UIColor in
+        if trait.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }), padding: .none)
     
     var defaultDate: Date {
         let formatter = DateFormatter()
