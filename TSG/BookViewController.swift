@@ -26,6 +26,10 @@ class BookViewController: UIViewController {
     
     @IBOutlet var daySelectControl: UISegmentedControl!
     
+    @IBAction func dismiss(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func dayChange(_ sender: UISegmentedControl) {
         print(daySelectControl.selectedSegmentIndex)
         if daySelectControl.selectedSegmentIndex == 0 {
@@ -34,7 +38,11 @@ class BookViewController: UIViewController {
             isTomorrow = true
         }
     }
-    var mobile = ""
+    var mobile = "" {
+        didSet {
+            print(mobile)
+        }
+    }
     
     lazy var activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.menuView.frame.size.width / 2 - 20, y: self.menuView.frame.size.height / 2 - 20, width: 40, height: 40), type: .ballSpinFadeLoader, color: UIColor(dynamicProvider: { (trait) -> UIColor in
         if trait.userInterfaceStyle == .dark {
@@ -343,39 +351,49 @@ class BookViewController: UIViewController {
             "Host" : "10.203.97.155",
             "Referer" : "http://10.203.97.155/book/notice/act_id/1580/type/4/lib/11"
         ]
-
-        Alamofire.request("http://10.203.97.155/api.php/activities/" + id + "/quit", method: .get, parameters: parameters, headers: headers).responseJSON { (response) in
-            if let responseStr = response.result.value {
-                let jsonResponse = JSON(responseStr)
-                let msg = jsonResponse["msg"].stringValue
-                print(msg)
-                if msg == "取消成功" {
-                    let alertController = UIAlertController(title: "取消成功", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
+        
+        Alamofire.request("http://10.214.242.11:1988/?username=\(globalStudentID)&password=\(globalPassword)", method: .get).responseString { (response) in
+            
+            if let ticketURL = response.result.value {
+                
+                Alamofire.request(ticketURL, method: .post).response { (response) in
+                    self.showAndSetCookies()
                     
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                        self.isSuccess = false
-                        self.bookedLibraryID = ""
-                        self.bookedLibrary = ""
-                        self.bookButton.isEnabled = true
-                        self.bookButton.setTitle("开始预约", for: .normal)
-                        self.bookButton.backgroundColor = .systemBlue
-                        self.tableView.isUserInteractionEnabled = true
-                    }
-                } else if msg == "退出失败，请重试" {
-                    let alertController = UIAlertController(title: "已在网页端取消预约", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                        self.isSuccess = false
-                        self.bookedLibraryID = ""
-                        self.bookedLibrary = ""
-                        self.bookButton.isEnabled = true
-                        self.bookButton.setTitle("开始预约", for: .normal)
-                        self.bookButton.backgroundColor = .systemBlue
-                        self.tableView.isUserInteractionEnabled = true
+                    Alamofire.request("http://10.203.97.155/api.php/activities/" + id + "/quit", method: .get, parameters: parameters, headers: headers).responseJSON { (response) in
+                        if let responseStr = response.result.value {
+                            let jsonResponse = JSON(responseStr)
+                            let msg = jsonResponse["msg"].stringValue
+                            print(msg)
+                            if msg == "取消成功" {
+                                let alertController = UIAlertController(title: "取消成功", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                    self.isSuccess = false
+                                    self.bookedLibraryID = ""
+                                    self.bookedLibrary = ""
+                                    self.bookButton.isEnabled = true
+                                    self.bookButton.setTitle("开始预约", for: .normal)
+                                    self.bookButton.backgroundColor = .systemBlue
+                                    self.tableView.isUserInteractionEnabled = true
+                                }
+                            } else if msg == "退出失败，请重试" {
+                                let alertController = UIAlertController(title: "已在网页端取消预约", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                    self.isSuccess = false
+                                    self.bookedLibraryID = ""
+                                    self.bookedLibrary = ""
+                                    self.bookButton.isEnabled = true
+                                    self.bookButton.setTitle("开始预约", for: .normal)
+                                    self.bookButton.backgroundColor = .systemBlue
+                                    self.tableView.isUserInteractionEnabled = true
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -391,91 +409,109 @@ class BookViewController: UIViewController {
         let headers: [String : String] = [
             "Accept" : "*/*",
             "Accept-Encoding" : "gzip, deflate",
-            "Accept-Language" : "zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7",
+            "Accept-Language" : "zh-cn",
             "Host" : "10.203.97.155",
-            "Referer" : "http://10.203.97.155/book/notice/act_id/1580/type/4/lib/11"
+            "Referer" : "http://10.203.97.155/book/notice/act_id/1622/type/4/lib/11",
+            "Connection" : "keep-alive"
         ]
-
-        Alamofire.request("http://10.203.97.155/api.php/activities/" + id + "/application2", method: .get, parameters: parameters, headers: headers).responseJSON { (response) in
-            if let responseStr = response.result.value {
-                let jsonResponse = JSON(responseStr)
-                print(jsonResponse["msg"].stringValue)
-                let msg = jsonResponse["msg"].stringValue
-                if msg == "活动申请失败，已申请的活动时间冲突！" && !self.isSuccess {
-                    self.timer.invalidate()
-                    self.tryTimes = 0
+                
+        Alamofire.request("http://10.214.242.11:1988/?username=\(globalStudentID)&password=\(globalPassword)", method: .get).responseString { (response) in
+            
+            if let ticketURL = response.result.value {
+                
+                Alamofire.request(ticketURL, method: .post).response { (response) in
+                    self.showAndSetCookies()
                     
-                    let alertController = UIAlertController(title: "当日存在已预约的图书馆", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                        self.bookButton.isEnabled = true
-                        self.bookButton.setTitle("开始预约", for: .normal)
-                        self.bookButton.backgroundColor = .systemBlue
-                        self.tableView.isUserInteractionEnabled = true
-                    }
-                } else if msg == "活动申请时间 已截止" && !self.isSuccess {
-                    self.timer.invalidate()
-                    self.tryTimes = 0
-                    
-                    let alertController = UIAlertController(title: "当日图书馆申请时间已截止", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                        self.bookButton.isEnabled = true
-                        self.bookButton.setTitle("开始预约", for: .normal)
-                        self.bookButton.backgroundColor = .systemBlue
-                        self.tableView.isUserInteractionEnabled = true
-                    }
-                } else if msg == "申请成功" {
-                    self.timer.invalidate()
-                    self.isSuccess = true
-                    self.bookedLibrary = libraryName
-                    self.bookedLibraryID = id
-                    self.tryTimes = 0
-                    
-                    self.bookButton.isEnabled = true
-                    self.bookButton.backgroundColor = .gray
-                    self.bookButton.setTitle("已预约：\(libraryName)", for: .normal)
-                    self.tableView.isUserInteractionEnabled = false
-                    self.daySelectControl.isEnabled = true
-                    
-                    let alertController = UIAlertController(title: "\(libraryName)申请成功", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                    }
-                } else if msg == "本馆开放预约时间<br/>07:00:00  -23:59:59  " {
-                    self.timer.invalidate()
-                    
-                    let alertController = UIAlertController(title: "本馆开放预约时间：07:00:00 - 23:59:59", message: "", preferredStyle: .alert)
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                        self.presentedViewController?.dismiss(animated: true, completion: nil)
-                        self.bookButton.isEnabled = true
-                        self.bookButton.setTitle("开始预约", for: .normal)
-                        self.bookButton.backgroundColor = .systemBlue
-                        self.tableView.isUserInteractionEnabled = true
+                    Alamofire.request("http://10.203.97.155/api.php/activities/" + id + "/application2", method: .get, parameters: parameters, headers: headers).responseJSON { (response) in
+                        if let responseStr = response.result.value {
+                            let jsonResponse = JSON(responseStr)
+                            print(jsonResponse["msg"].stringValue)
+                            let msg = jsonResponse["msg"].stringValue
+                            if msg == "活动申请失败，已申请的活动时间冲突！" && !self.isSuccess {
+                                self.timer.invalidate()
+                                self.tryTimes = 0
+                                
+                                let alertController = UIAlertController(title: "当日存在已预约的图书馆", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                    self.bookButton.isEnabled = true
+                                    self.bookButton.setTitle("开始预约", for: .normal)
+                                    self.bookButton.backgroundColor = .systemBlue
+                                    self.tableView.isUserInteractionEnabled = true
+                                }
+                            } else if msg == "活动申请时间 已截止" && !self.isSuccess {
+                                self.timer.invalidate()
+                                self.tryTimes = 0
+                                
+                                let alertController = UIAlertController(title: "当日图书馆申请时间已截止", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                    self.bookButton.isEnabled = true
+                                    self.bookButton.setTitle("开始预约", for: .normal)
+                                    self.bookButton.backgroundColor = .systemBlue
+                                    self.tableView.isUserInteractionEnabled = true
+                                    self.daySelectControl.isEnabled = true
+                                }
+                            } else if msg == "申请成功" {
+                                self.timer.invalidate()
+                                self.isSuccess = true
+                                self.bookedLibrary = libraryName
+                                self.bookedLibraryID = id
+                                self.tryTimes = 0
+                                
+                                self.bookButton.isEnabled = true
+                                self.bookButton.backgroundColor = .gray
+                                self.bookButton.setTitle("已预约：\(libraryName)", for: .normal)
+                                self.tableView.isUserInteractionEnabled = false
+                                self.daySelectControl.isEnabled = true
+                                
+                                let alertController = UIAlertController(title: "\(libraryName)申请成功", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                }
+                            } else if msg == "本馆开放预约时间<br/>07:00:00  -23:59:59  " {
+                                self.timer.invalidate()
+                                
+                                let alertController = UIAlertController(title: "本馆开放预约时间：07:00:00 - 23:59:59", message: "", preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                                    self.bookButton.isEnabled = true
+                                    self.bookButton.setTitle("开始预约", for: .normal)
+                                    self.bookButton.backgroundColor = .systemBlue
+                                    self.tableView.isUserInteractionEnabled = true
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    
+        
+    func showAndSetCookies() {
 
-    /*
-    // MARK: - Navigation
+        let cookieStorage = HTTPCookieStorage.shared
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let cookies = cookieStorage.cookies as! [HTTPCookie]
+        for cookie in cookies {
+            var cookieProperties = [HTTPCookiePropertyKey: String]()
+
+            cookieProperties[HTTPCookiePropertyKey.name] = cookie.name
+            cookieProperties[HTTPCookiePropertyKey.value] = cookie.value
+            cookieProperties[HTTPCookiePropertyKey.domain] = "10.203.97.155"
+            cookieProperties[HTTPCookiePropertyKey.path] = cookie.path
+            cookieProperties[HTTPCookiePropertyKey.version] = String(cookie.version)
+            cookieProperties[HTTPCookiePropertyKey.secure] = String(cookie.isSecure)
+        }
     }
-    */
 
 }
 
