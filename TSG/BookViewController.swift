@@ -106,6 +106,21 @@ class BookViewController: UIViewController {
     
     var sleepTimer: Timer!
     
+    var freeNumber: [Int : Int] = [:] {
+        didSet {
+            if freeNumber.count == libraryTodayID.values.count + libraryTomorrowID.values.count {
+                print(freeNumber)
+            }
+        }
+    }
+    var totalNumber: [Int : Int] = [:] {
+        didSet {
+            if freeNumber.count == libraryTodayID.values.count + libraryTomorrowID.values.count {
+                print(totalNumber)
+            }
+        }
+    }
+    
     var isSuccess = false {
         didSet {
             if isTomorrow {
@@ -303,6 +318,43 @@ class BookViewController: UIViewController {
         activityIndicatorView.startAnimating()
         
         checkBookedLibrary()
+        
+        for lib in libraryTodayID.values {
+            let libID = lib + Date.daysBetween(start: self.defaultDate, end: Date())
+            revervationNumberCheck(libID: libID)
+        }
+        
+        for lib in libraryTomorrowID.values {
+            let libID = lib + Date.daysBetween(start: self.defaultDate, end: Date())
+            revervationNumberCheck(libID: libID)
+        }
+    }
+    
+    func revervationNumberCheckURL(libID: Int) -> String {
+        return "http://10.203.97.155/book/notice/act_id/\(libID)/type/4/lib/11"
+    }
+    
+    func revervationNumberCheck(libID: Int) {
+        let checkURL = revervationNumberCheckURL(libID: libID)
+        Alamofire.request(checkURL, method: .get).responseData { (response) in
+            if let html = response.result.value, let doc = try? HTML(html: html, encoding: .utf8) {
+                if let content = doc.content {
+                    var components = content.components(separatedBy: "预约人数：[")
+                    if components.count > 1 {
+                        var tempStr = components[1]
+                        components = tempStr.components(separatedBy: "]\r\n")
+                        tempStr = components[0]
+                        components = tempStr.components(separatedBy: "/")
+                        if components.count > 1 {
+                            let freeN = Int(components[0])
+                            let totalN = Int(components[1])
+                            self.freeNumber[libID] = freeN
+                            self.totalNumber[libID] = totalN
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func checkBookedLibrary() {
