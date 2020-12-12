@@ -11,6 +11,10 @@ import UIKit
 class LibraryTableViewCell: UITableViewCell {
 
     @IBOutlet var libraryNameLabel: UILabel!
+    @IBOutlet var checkImageView: UIImageView!
+    @IBOutlet var leftNumberLabel: UILabel!
+    @IBOutlet var totalNumberLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,6 +26,11 @@ class LibraryTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func animate() {
+        UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0.8, options: .curveEaseIn) {
+            self.contentView.layoutIfNeeded()
+        }
+    }
     
 
 }

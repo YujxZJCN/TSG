@@ -37,6 +37,8 @@ class BookViewController: UIViewController {
         } else {
             isTomorrow = true
         }
+        
+        tableView.reloadData()
     }
     var mobile = "" {
         didSet {
@@ -110,6 +112,7 @@ class BookViewController: UIViewController {
         didSet {
             if freeNumber.count == libraryTodayID.values.count + libraryTomorrowID.values.count {
                 print(freeNumber)
+                tableView.reloadData()
             }
         }
     }
@@ -117,6 +120,7 @@ class BookViewController: UIViewController {
         didSet {
             if freeNumber.count == libraryTodayID.values.count + libraryTomorrowID.values.count {
                 print(totalNumber)
+                tableView.reloadData()
             }
         }
     }
@@ -258,7 +262,7 @@ class BookViewController: UIViewController {
         didSet {
             if tryTimes % 10 == 0 && tryTimes != 0 {
                 timer.invalidate()
-                sleepTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(sleepForThreeSeconds), userInfo: nil, repeats: true)
+                sleepTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(sleepForThreeSeconds), userInfo: nil, repeats: true)
                 sleepTimer.fire()
             }
         }
@@ -568,6 +572,8 @@ class BookViewController: UIViewController {
                                     self.bookButton.setTitle("开始预约", for: .normal)
                                     self.bookButton.backgroundColor = .systemBlue
                                     self.tableView.isUserInteractionEnabled = true
+                                    self.daySelectControl.isEnabled = true
+                                    self.tryTimes = 0
                                 }
                             }
                         }
@@ -602,27 +608,58 @@ extension BookViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        indexPaths.removeAll()
-        if let idp = tableView.indexPathsForSelectedRows {
-            self.indexPaths = idp
-            if idp.count != 0 {
-                bookButton.isEnabled = true
-                bookButton.backgroundColor = .systemBlue
-            } else {
-                bookButton.isEnabled = false
-                bookButton.backgroundColor = .gray
-            }
+//        indexPaths.removeAll()
+        var removedIndexPath: IndexPath? = nil
+        if indexPaths.contains(indexPath) {
+            indexPaths.removeAll { $0 == indexPath }
+            removedIndexPath = indexPath
+        } else {
+            indexPaths.append(indexPath)
         }
+//        if let idp = tableView.indexPathsForSelectedRows {
+//            self.indexPaths = idp
+//            if idp.count != 0 {
+//                bookButton.isEnabled = true
+//                bookButton.backgroundColor = .systemBlue
+//            } else {
+//                bookButton.isEnabled = false
+//                bookButton.backgroundColor = .gray
+//            }
+//        }
+        
+        tableView.beginUpdates()
+        tableView.reloadRows(at: indexPaths, with: .none)
+        if let rmvdIndexPath = removedIndexPath, let cell = tableView.cellForRow(at: rmvdIndexPath) as? LibraryTableViewCell {
+            cell.checkImageView.alpha = 0.0
+        }
+        tableView.endUpdates()
+        
+//        for indexPath in indexPaths {
+//            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+//        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        indexPaths.removeAll()
-        if let idp = tableView.indexPathsForSelectedRows {
-            self.indexPaths = idp
+//        indexPaths.removeAll()
+//        if let idp = tableView.indexPathsForSelectedRows {
+//            self.indexPaths = idp
+//        }
+        if indexPaths.contains(indexPath) {
+            indexPaths.removeAll { $0 == indexPath }
+        } else {
+            indexPaths.append(indexPath)
         }
+        tableView.beginUpdates()
+        tableView.reloadRows(at: indexPaths, with: .none)
+        tableView.endUpdates()
+        
+//        for indexPath in indexPaths {
+//            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPaths.contains(indexPath) { return 205.0 }
         return 90.0
     }
     
@@ -631,9 +668,38 @@ extension BookViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.libraryNameLabel.text = library[indexPath.row]
         
+        if indexPaths.contains(indexPath) {
+            cell.checkImageView.alpha = 1.0
+        } else {
+            cell.checkImageView.alpha = 0.0
+        }
+        
+        if !isTomorrow {
+            let libID = libraryTodayID[library[indexPath.row]]! + Date.daysBetween(start: defaultDate, end: Date())
+            
+            if let leftN = freeNumber[libID] {
+                cell.leftNumberLabel.text = "\(leftN)"
+            }
+            
+            if let totalN = totalNumber[libID] {
+                cell.totalNumberLabel.text = "\(totalN)"
+            }
+        } else {
+            let libID = libraryTomorrowID[library[indexPath.row]]! + Date.daysBetween(start: defaultDate, end: Date())
+            
+            if let leftN = freeNumber[libID] {
+                cell.leftNumberLabel.text = String(leftN)
+            }
+            
+            if let totalN = totalNumber[libID] {
+                cell.totalNumberLabel.text = "\(totalN)"
+            }
+        }
+        
+        cell.selectionStyle = .none
+        cell.animate()
         return cell
     }
-    
     
 }
 
