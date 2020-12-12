@@ -104,6 +104,8 @@ class BookViewController: UIViewController {
     
     var timer: Timer!
     
+    var sleepTimer: Timer!
+    
     var isSuccess = false {
         didSet {
             if isTomorrow {
@@ -225,7 +227,7 @@ class BookViewController: UIViewController {
                 self.tryTimes = 0
             } else {
                 if !indexPaths.isEmpty {
-                    timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(booking), userInfo: nil, repeats: true)
+                    timer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(booking), userInfo: nil, repeats: true)
                     timer.fire()
                     bookButton.isEnabled = true
                     bookButton.setTitle("正在预约中", for: .normal)
@@ -237,7 +239,34 @@ class BookViewController: UIViewController {
         }
     }
     
-    var tryTimes = 0
+    var tryTimes = 0 {
+        didSet {
+            if tryTimes % 10 == 0 && tryTimes != 0 {
+                timer.invalidate()
+                sleepTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(sleepForThreeSeconds), userInfo: nil, repeats: true)
+                sleepTimer.fire()
+            }
+        }
+    }
+    
+    var isSleeping = false
+    
+    @objc func sleepForThreeSeconds() {
+        if !isSleeping {
+            DispatchQueue.main.async {
+                self.bookButton.setTitle("休息一下", for: .normal)
+            }
+            isSleeping = true
+        } else {
+            sleepTimer.invalidate()
+            DispatchQueue.main.async {
+                self.bookButton.setTitle("正在预约中（\(self.tryTimes)）", for: .normal)
+            }
+            timer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(booking), userInfo: nil, repeats: true)
+            timer.fire()
+            isSleeping = false
+        }
+    }
     
     @objc func booking() {
         let date = daySelectControl.selectedSegmentIndex
