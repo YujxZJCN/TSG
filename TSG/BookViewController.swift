@@ -57,7 +57,7 @@ class BookViewController: UIViewController {
     var defaultDate: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
-        return formatter.date(from: "2020/10/29")!
+        return formatter.date(from: "2021/01/01")!
     }
     
     var indexPaths: [IndexPath] = [] {
@@ -75,33 +75,33 @@ class BookViewController: UIViewController {
     let library: [String] = ["基础馆", "西溪馆", "农医馆", "华家池馆", "玉泉401阅览室", "玉泉420阅览室", "玉泉300阅览室", "玉泉501阅览室", "玉泉520阅览室", "玉泉701阅览室", "玉泉320阅览室", "玉泉820阅览室"]
     
     let libraryTodayID: [String : Int] = [
-        "基础馆" : 1580,
-        "西溪馆" : 2076,
-        "农医馆" : 1828,
-        "华家池馆" : 1332,
-        "玉泉401阅览室" : 3812,
-        "玉泉420阅览室" : 3564,
-        "玉泉300阅览室" : 2324,
-        "玉泉501阅览室" : 3068,
-        "玉泉520阅览室" : 3316,
-        "玉泉701阅览室" : 4045,
-        "玉泉320阅览室" : 4278,
-        "玉泉820阅览室" : 4744
+        "基础馆" : 5177,
+        "西溪馆" : 5907,
+        "农医馆" : 5542,
+        "华家池馆" : 4812,
+        "玉泉401阅览室" : 7002,
+        "玉泉420阅览室" : 7367,
+        "玉泉300阅览室" : 6272,
+        "玉泉501阅览室" : 7732,
+        "玉泉520阅览室" : 8097,
+        "玉泉701阅览室" : 8462,
+        "玉泉320阅览室" : 6637,
+        "玉泉820阅览室" : 8827
     ]
     
     let libraryTomorrowID: [String : Int] = [
-        "基础馆" : 1581,
-        "西溪馆" : 2077,
-        "农医馆" : 1829,
-        "华家池馆" : 1333,
-        "玉泉401阅览室" : 3813,
-        "玉泉420阅览室" : 3565,
-        "玉泉300阅览室" : 2325,
-        "玉泉501阅览室" : 3069,
-        "玉泉520阅览室" : 3317,
-        "玉泉701阅览室" : 4046,
-        "玉泉320阅览室" : 4279,
-        "玉泉820阅览室" : 4745
+        "基础馆" : 5178,
+        "西溪馆" : 5908,
+        "农医馆" : 5543,
+        "华家池馆" : 4813,
+        "玉泉401阅览室" : 7003,
+        "玉泉420阅览室" : 7368,
+        "玉泉300阅览室" : 6273,
+        "玉泉501阅览室" : 7733,
+        "玉泉520阅览室" : 8098,
+        "玉泉701阅览室" : 8463,
+        "玉泉320阅览室" : 6638,
+        "玉泉820阅览室" : 8828
     ]
     
     var timer: Timer!
@@ -260,11 +260,11 @@ class BookViewController: UIViewController {
     
     var tryTimes = 0 {
         didSet {
-            if tryTimes % 10 == 0 && tryTimes != 0 {
-                timer.invalidate()
-                sleepTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(sleepForThreeSeconds), userInfo: nil, repeats: true)
-                sleepTimer.fire()
-            }
+//            if tryTimes % 10 == 0 && tryTimes != 0 {
+//                timer.invalidate()
+//                sleepTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(sleepForThreeSeconds), userInfo: nil, repeats: true)
+//                sleepTimer.fire()
+//            }
         }
     }
     

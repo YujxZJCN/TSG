@@ -132,9 +132,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="基础馆" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dU8-wn-TFP">
-                                                    <rect key="frame" x="132" y="34.5" width="150" height="21.5"/>
+                                                    <rect key="frame" x="70" y="34.5" width="274" height="21.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="Nbz-P4-TMY"/>
+                                                        <constraint firstAttribute="height" constant="21.5" id="ZSN-MG-P0p"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <nil key="textColor"/>
@@ -209,11 +209,13 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="dU8-wn-TFP" firstAttribute="leading" secondItem="IVi-o3-0ec" secondAttribute="leadingMargin" constant="50" id="6Sy-XW-63u"/>
                                                 <constraint firstItem="PSG-RK-eah" firstAttribute="top" secondItem="Dsd-MA-anO" secondAttribute="bottom" constant="24" id="B5k-PY-GBN"/>
                                                 <constraint firstItem="Dsd-MA-anO" firstAttribute="centerX" secondItem="dU8-wn-TFP" secondAttribute="centerX" id="EJW-fA-gNS"/>
                                                 <constraint firstItem="Dsd-MA-anO" firstAttribute="top" secondItem="LHb-MC-nyE" secondAttribute="bottom" constant="32" id="Hel-a1-Fmq"/>
                                                 <constraint firstItem="PSG-RK-eah" firstAttribute="centerX" secondItem="dU8-wn-TFP" secondAttribute="centerX" id="IMz-Ey-97v"/>
                                                 <constraint firstItem="xPc-yh-1GD" firstAttribute="bottom" secondItem="PSG-RK-eah" secondAttribute="bottom" constant="6" id="OXn-hH-b5V"/>
+                                                <constraint firstItem="Dsd-MA-anO" firstAttribute="leading" secondItem="IVi-o3-0ec" secondAttribute="leadingMargin" constant="12" id="Rri-hP-MTv"/>
                                                 <constraint firstItem="dU8-wn-TFP" firstAttribute="centerX" secondItem="IVi-o3-0ec" secondAttribute="centerX" id="T2e-qj-Vds"/>
                                                 <constraint firstItem="LHb-MC-nyE" firstAttribute="centerY" secondItem="dU8-wn-TFP" secondAttribute="centerY" id="WHh-PU-Aac"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="LHb-MC-nyE" secondAttribute="trailing" constant="12" id="WY3-a7-gbw"/>
@@ -221,6 +223,7 @@
                                                 <constraint firstItem="xPc-yh-1GD" firstAttribute="top" secondItem="PSG-RK-eah" secondAttribute="top" constant="-6" id="hvE-cS-AK5"/>
                                                 <constraint firstItem="xPc-yh-1GD" firstAttribute="centerX" secondItem="PSG-RK-eah" secondAttribute="centerX" id="oi4-Fn-Bi4"/>
                                                 <constraint firstItem="Dsd-MA-anO" firstAttribute="trailing" secondItem="LHb-MC-nyE" secondAttribute="trailing" id="qrY-Mx-hDF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Dsd-MA-anO" secondAttribute="trailing" constant="12" id="swP-WQ-R5d"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

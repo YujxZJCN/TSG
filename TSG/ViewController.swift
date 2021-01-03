@@ -69,18 +69,24 @@ class ViewController: UIViewController {
         Alamofire.request("http://10.214.242.11:1988/?username=\(username)&password=\(password)", method: .get).responseString { (response) in
             print(response.result.value ?? "Error")
             
-            if let ticketURL = response.result.value {
-                self.statusLabel.text = "门票获取成功，使用门票登录图书馆系统"
-                
-                Alamofire.request(ticketURL, method: .post).response { (response) in
-                    self.statusLabel.text = "登录成功，设置Cookies"
-                    self.showAndSetCookies()
-                    
-                    DispatchQueue.main.async {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "BookVC") as! BookViewController
-                        vc.mobile = self.mobile
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: nil)
+            if let res = response.result.value {
+                if res.isEmpty {
+                    self.statusLabel.text = "账号或密码错误"
+                } else {
+                    if let ticketURL = response.result.value {
+                        self.statusLabel.text = "门票获取成功，使用门票登录图书馆系统"
+                        
+                        Alamofire.request(ticketURL, method: .post).response { (response) in
+                            self.statusLabel.text = "登录成功，设置Cookies"
+                            self.showAndSetCookies()
+                            
+                            DispatchQueue.main.async {
+                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "BookVC") as! BookViewController
+                                vc.mobile = self.mobile
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true, completion: nil)
+                            }
+                        }
                     }
                 }
             }
