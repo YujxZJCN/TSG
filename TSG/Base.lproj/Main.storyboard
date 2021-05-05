@@ -268,6 +268,71 @@
             </objects>
             <point key="canvasLocation" x="834.78260869565224" y="90.401785714285708"/>
         </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="NAX-Pw-tKs">
+            <objects>
+                <viewController id="V7U-Bh-dvw" customClass="SettingViewController" customModule="图书馆预约" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yuM-wD-p2X">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sdK-nE-jSk">
+                                <rect key="frame" x="0.0" y="792" width="414" height="70"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="Vlr-WR-cCC">
+                                        <rect key="frame" x="14" y="14" width="386" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb6-gT-9Qk">
+                                                <rect key="frame" x="0.0" y="0.0" width="186" height="42"/>
+                                                <color key="backgroundColor" systemColor="linkColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="42" id="Zp6-b6-ei2"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="恢复默认">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFw-to-6QR">
+                                                <rect key="frame" x="200" y="0.0" width="186" height="42"/>
+                                                <color key="backgroundColor" systemColor="linkColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="42" id="Xft-8L-ZiR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="保存设置">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="4zn-y6-lDr"/>
+                                    <constraint firstItem="Vlr-WR-cCC" firstAttribute="centerY" secondItem="sdK-nE-jSk" secondAttribute="centerY" id="DLi-Tf-Kcq"/>
+                                    <constraint firstItem="Vlr-WR-cCC" firstAttribute="centerX" secondItem="sdK-nE-jSk" secondAttribute="centerX" id="Fi9-gB-XYp"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vlr-WR-cCC" secondAttribute="trailing" constant="14" id="vP1-Ez-jRq"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="acw-Km-GJd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sdK-nE-jSk" firstAttribute="bottom" secondItem="acw-Km-GJd" secondAttribute="bottom" id="9af-at-ncC"/>
+                            <constraint firstItem="sdK-nE-jSk" firstAttribute="leading" secondItem="acw-Km-GJd" secondAttribute="leading" id="FUg-12-bov"/>
+                            <constraint firstItem="sdK-nE-jSk" firstAttribute="trailing" secondItem="acw-Km-GJd" secondAttribute="trailing" id="wGm-bq-eIC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="resetToDefaultButton" destination="zb6-gT-9Qk" id="nh5-QX-5BX"/>
+                        <outlet property="saveChangeButton" destination="NFw-to-6QR" id="UcF-Uf-kBM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u7u-MP-5zg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1662" y="91"/>
+        </scene>
     </scenes>
     <resources>
         <image name="check" width="200" height="200"/>

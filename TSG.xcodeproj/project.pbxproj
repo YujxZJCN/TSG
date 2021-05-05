@@ -21,6 +21,7 @@
 		F61ADDA5254AD9150038982C /* TSGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDA4254AD9150038982C /* TSGUITests.swift */; };
 		F61ADDB3254AFC720038982C /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDB2254AFC720038982C /* BookViewController.swift */; };
 		F61ADDB5254B01EB0038982C /* LibraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */; };
+		F681A6F525A1F98A00C32D72 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F681A6F425A1F98A00C32D72 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		F61ADDA6254AD9150038982C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F61ADDB2254AFC720038982C /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableViewCell.swift; sourceTree = "<group>"; };
+		F681A6F425A1F98A00C32D72 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				F61ADDB2254AFC720038982C /* BookViewController.swift */,
 				F61ADDB4254B01EB0038982C /* LibraryTableViewCell.swift */,
 				F61ADD85254AD9120038982C /* Main.storyboard */,
+				F681A6F425A1F98A00C32D72 /* SettingViewController.swift */,
 				F61ADD8B254AD9150038982C /* Assets.xcassets */,
 				F61ADD8D254AD9150038982C /* LaunchScreen.storyboard */,
 				F61ADD90254AD9150038982C /* Info.plist */,
@@ -421,6 +424,7 @@
 				F61ADDB3254AFC720038982C /* BookViewController.swift in Sources */,
 				F61ADD8A254AD9120038982C /* TSG.xcdatamodeld in Sources */,
 				F61ADD82254AD9120038982C /* SceneDelegate.swift in Sources */,
+				F681A6F525A1F98A00C32D72 /* SettingViewController.swift in Sources */,
 				F61ADDB5254B01EB0038982C /* LibraryTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
